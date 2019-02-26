@@ -6,7 +6,7 @@
 #include <pragma/lua/ldefinitions.h>
 
 #pragma comment(lib,"mathutil.lib")
-#pragma comment(lib,"util.lib")
+#pragma comment(lib,"sharedutils.lib")
 #pragma comment(lib,"shared.lib")
 #pragma comment(lib,"engine.lib")
 #pragma comment(lib,"lua51.lib")
