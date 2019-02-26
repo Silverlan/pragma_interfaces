@@ -12,7 +12,7 @@
 #pragma comment(lib,"engine.lib")
 #pragma comment(lib,"lua51.lib")
 #pragma comment(lib,"luasystem.lib")
-#pragma comment(lib,"util.lib")
+#pragma comment(lib,"sharedutils.lib")
 #pragma comment(lib,"mathutil.lib")
 
 extern DLLSERVER ServerState *server;

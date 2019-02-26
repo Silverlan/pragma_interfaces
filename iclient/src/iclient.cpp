@@ -22,7 +22,7 @@
 #pragma comment(lib,"lua51.lib")
 #pragma comment(lib,"luasystem.lib")
 #pragma comment(lib,"luabind.lib")
-#pragma comment(lib,"util.lib")
+#pragma comment(lib,"sharedutils.lib")
 #pragma comment(lib,"mathutil.lib")
 #pragma comment(lib,"prosper.lib")
 
