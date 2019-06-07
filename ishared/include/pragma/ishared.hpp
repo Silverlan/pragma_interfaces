@@ -11,12 +11,20 @@ extern "C" {
 #include <string>
 
 #ifdef DLLISHARED_EX
-	#define DLLISHARED __declspec(dllexport)
+	#ifdef __linux__
+		#define DLLISHARED __attribute__((visibility("default")))
+	#else
+		#define DLLISHARED __declspec(dllexport)
+	#endif
 #else
-	#define DLLISHARED __declspec(dllimport)
+	#ifdef __linux__
+		#define DLLISHARED
+	#else
+		#define DLLISHARED __declspec(dllimport)
+	#endif
 #endif
 
-extern class CallbackHandle;
+class CallbackHandle;
 class Model;
 namespace ishared
 {
