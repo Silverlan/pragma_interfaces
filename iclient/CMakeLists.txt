@@ -65,7 +65,6 @@ link_external_library(engine)
 link_external_library(shared)
 link_external_library(client)
 link_external_library(luasystem)
-link_external_library(LuaJIT)
 link_external_library(luabind)
 link_external_library(materialsystem)
 link_external_library(cmaterialsystem)
@@ -77,9 +76,15 @@ link_external_library(glfw)
 link_external_library(iglfw)
 link_external_library(wgui)
 link_external_library(alsoundsystem)
+link_external_library(glslang)
+link_external_library(luajit)
+if(WIN32)
+	add_external_library(lua)
+endif()
 
 add_include_dir(glm)
 add_include_dir(boost)
+add_include_dir(anvil_build)
 
 set(DEFINITIONS
 	USE_LUAJIT
@@ -88,6 +93,8 @@ set(DEFINITIONS
 	BOOST_ALL_DYN_LINK
 	BT_USE_DOUBLE_PRECISION
 	LUABIND_DYNAMIC_LINK
+	ANVIL_VULKAN_CPP
+	DLLICLIENT_EX
 )
 
 ##### CONFIGURATION #####
