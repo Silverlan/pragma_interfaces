@@ -1,5 +1,6 @@
 #include "pragma/ishared.hpp"
 #include <pragma/level/mapinfo.h>
+#include <pragma/lua/libraries/lfile.h>
 #include <pragma/engine.h>
 #include <pragma/lua/lua_doc.hpp>
 #include <pragma/networkstate/networkstate.h>
