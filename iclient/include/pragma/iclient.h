@@ -41,7 +41,7 @@ namespace iclient
 	DLLICLIENT const CallbackHandle &add_callback(Callback cb,const CallbackHandle &f);
 	DLLICLIENT lua_State *get_lua_state();
 	DLLICLIENT lua_State *get_gui_lua_state();
-	DLLICLIENT void add_gui_lua_wrapper_factory(const std::function<luabind::adl::object(lua_State*,WIBase*)> &f);
+	DLLICLIENT void add_gui_lua_wrapper_factory(const std::function<luabind::adl::object(lua_State*,WIBase&)> &f);
 	DLLICLIENT double real_time();
 	DLLICLIENT double delta_time();
 	DLLICLIENT double last_think();

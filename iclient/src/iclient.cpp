@@ -12,20 +12,6 @@
 #include "pragma/gui/wiluahandlewrapper.h"
 #include "pragma/iscene.h"
 
-#pragma comment(lib,"Anvil.lib")
-#pragma comment(lib,"glfw.lib")
-#pragma comment(lib,"cengine.lib")
-#pragma comment(lib,"shared.lib")
-#pragma comment(lib,"client.lib")
-#pragma comment(lib,"engine.lib")
-#pragma comment(lib,"cengine.lib")
-#pragma comment(lib,"lua51.lib")
-#pragma comment(lib,"luasystem.lib")
-#pragma comment(lib,"luabind.lib")
-#pragma comment(lib,"sharedutils.lib")
-#pragma comment(lib,"mathutil.lib")
-#pragma comment(lib,"prosper.lib")
-
 extern DLLCENGINE CEngine *c_engine;
 extern DLLCLIENT ClientState *client;
 extern DLLCLIENT CGame *c_game;
@@ -99,7 +85,7 @@ std::shared_ptr<::Model> iclient::create_model(bool bAddReference)
 lua_State *iclient::get_lua_state() {return client->GetLuaState();}
 lua_State *iclient::get_gui_lua_state() {return client->GetGUILuaState();}
 
-void iclient::add_gui_lua_wrapper_factory(const std::function<luabind::object(lua_State*,WIBase*)> &f) {client->AddGUILuaWrapperFactory(f);}
+void iclient::add_gui_lua_wrapper_factory(const std::function<luabind::object(lua_State*,WIBase&)> &f) {client->AddGUILuaWrapperFactory(f);}
 
 double iclient::real_time() {return client->RealTime();}
 double iclient::delta_time() {return client->DeltaTime();}
