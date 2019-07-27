@@ -21,7 +21,7 @@ struct GLFWwindow;
 class IScene;
 class Model;
 class WIBase;
-namespace prosper {class RenderTarget; class Context; class Shader; class PrimaryCommandBuffer;};
+namespace prosper {class RenderTarget; class Context; class Shader; class PrimaryCommandBuffer; class Texture;};
 namespace luabind {namespace adl{class object;};};
 namespace iclient
 {
@@ -47,7 +47,7 @@ namespace iclient
 	DLLICLIENT double last_think();
 	DLLICLIENT bool protected_lua_call(int nargs=0,int nresults=0);
 	DLLICLIENT GLFWwindow *get_context_window();
-	DLLICLIENT const std::shared_ptr<prosper::RenderTarget> &get_screen_render_target();
+	DLLICLIENT std::shared_ptr<prosper::Texture> get_presentation_texture();
 	DLLICLIENT IScene get_render_scene();
 	DLLICLIENT IScene get_main_scene();
 	DLLICLIENT const prosper::Context &get_render_context();

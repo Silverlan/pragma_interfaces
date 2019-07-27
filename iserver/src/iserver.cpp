@@ -7,13 +7,7 @@
 #include <sharedutils/util_cpu_profiler.hpp>
 #include <pragma/serverstate/serverstate.h>
 
-#pragma comment(lib,"shared.lib")
-#pragma comment(lib,"server.lib")
-#pragma comment(lib,"engine.lib")
 #pragma comment(lib,"lua51.lib")
-#pragma comment(lib,"luasystem.lib")
-#pragma comment(lib,"sharedutils.lib")
-#pragma comment(lib,"mathutil.lib")
 
 extern DLLSERVER ServerState *server;
 extern DLLSERVER SGame *s_game;
@@ -75,4 +69,5 @@ bool iserver::protected_lua_call(int nargs,int nresults)
 	if(err == 0)
 		return true;
 	Lua::HandleLuaError(m_lua,static_cast<Lua::StatusCode>(err));
+	return false;
 }

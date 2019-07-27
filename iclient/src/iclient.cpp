@@ -9,6 +9,7 @@
 #include <image/prosper_render_target.hpp>
 #include <prosper_render_pass.hpp>
 #include <prosper_framebuffer.hpp>
+#include <pragma/rendering/renderers/base_renderer.hpp>
 #include "pragma/gui/wiluahandlewrapper.h"
 #include "pragma/iscene.h"
 
@@ -106,10 +107,13 @@ GLFWwindow *iclient::get_context_window()
 	return const_cast<GLFWwindow*>(window.GetGLFWWindow());
 }
 
-const std::shared_ptr<prosper::RenderTarget> &iclient::get_screen_render_target()
+std::shared_ptr<prosper::Texture> iclient::get_presentation_texture()
 {
 	auto &scene = c_game->GetScene();
-	return scene->GetHDRInfo().hdrRenderTarget;
+	auto *renderer = scene->GetRenderer();
+	if(renderer == nullptr)
+		return nullptr;
+	return renderer->GetPresentationTexture();
 }
 
 const prosper::Context &iclient::get_render_context() {return *c_engine;}
