@@ -69,6 +69,7 @@ link_external_library(luabind)
 link_external_library(materialsystem)
 link_external_library(datasystem)
 link_external_library(wms_shared)
+link_external_library(lua)
 
 add_include_dir(glm)
 add_include_dir(boost)
