@@ -16,7 +16,7 @@ IScene IScene::Create(uint32_t width,uint32_t height)
 	auto scene = Scene::Create(createInfo);
 	return IScene(scene);
 }
-
+Scene &IScene::GetInternalScene() {return *static_cast<Scene*>(m_target.get());}
 uint32_t IScene::GetWidth() const {return static_cast<Scene*>(m_target.get())->GetWidth();}
 uint32_t IScene::GetHeight() const {return static_cast<Scene*>(m_target.get())->GetHeight();}
 WorldEnvironment *IScene::GetWorldEnvironment() const {return static_cast<Scene*>(m_target.get())->GetWorldEnvironment();}
@@ -27,7 +27,7 @@ void IScene::SetWorldEnvironment(WorldEnvironment *env)
 	else
 		static_cast<Scene*>(m_target.get())->SetWorldEnvironment(*env);
 }
-const std::shared_ptr<void> &IScene::GetLightSourceListInfo() const {return static_cast<Scene*>(m_target.get())->GetLightSourceListInfo();}
+std::shared_ptr<void> IScene::GetLightSourceListInfo() const {return static_cast<Scene*>(m_target.get())->GetLightSourceListInfo();}
 void IScene::SetLightSourceListInfo(const std::shared_ptr<void> &lightSources)
 {
 	static_cast<Scene*>(m_target.get())->SetLights(std::static_pointer_cast<Scene::LightListInfo>(lightSources));
