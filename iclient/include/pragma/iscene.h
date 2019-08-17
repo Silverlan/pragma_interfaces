@@ -8,6 +8,7 @@
 #include <vector>
 
 class WorldEnvironment;
+class Scene;
 class DLLICLIENT IScene
 {
 private:
@@ -16,13 +17,14 @@ public:
 	IScene(const std::shared_ptr<void>&);
 	const std::shared_ptr<void> &GetTarget() const;
 	static IScene Create(uint32_t width,uint32_t height);
+	Scene &GetInternalScene();
 	
 	uint32_t GetWidth() const;
 	uint32_t GetHeight() const;
 
 	WorldEnvironment *GetWorldEnvironment() const;
 	void SetWorldEnvironment(WorldEnvironment *env);
-	const std::shared_ptr<void> &GetLightSourceListInfo() const;
+	std::shared_ptr<void> GetLightSourceListInfo() const;
 	void SetLightSourceListInfo(const std::shared_ptr<void> &lightSources);
 	void InitializeRenderTarget();
 	void LinkEntities(IScene &other);
