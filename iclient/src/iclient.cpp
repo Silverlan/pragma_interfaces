@@ -125,7 +125,7 @@ void iclient::draw_scene(const IScene &cam,const std::shared_ptr<prosper::Primar
 {
 	c_game->SetRenderClipPlane({});
 	c_game->SetRenderScene(std::static_pointer_cast<Scene>(cam.GetTarget()));
-		c_game->RenderScene(const_cast<std::shared_ptr<prosper::PrimaryCommandBuffer>&>(drawCmd),rt);
+		c_game->RenderScene(const_cast<std::shared_ptr<prosper::PrimaryCommandBuffer>&>(drawCmd),*rt->GetTexture()->GetImage());
 	c_game->SetRenderScene(nullptr);
 }
 
