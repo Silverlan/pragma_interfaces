@@ -21,7 +21,7 @@ struct GLFWwindow;
 class IScene;
 class Model;
 class WIBase;
-namespace prosper {class RenderTarget; class Context; class Shader; class PrimaryCommandBuffer; class Texture;};
+namespace prosper {class RenderTarget; class IPrContext; class Shader; class IPrimaryCommandBuffer; class Texture;};
 namespace luabind {namespace adl{class object;};};
 namespace iclient
 {
@@ -50,14 +50,14 @@ namespace iclient
 	DLLICLIENT std::shared_ptr<prosper::Texture> get_presentation_texture();
 	DLLICLIENT IScene get_render_scene();
 	DLLICLIENT IScene get_main_scene();
-	DLLICLIENT const prosper::Context &get_render_context();
-	DLLICLIENT void draw_scene(const IScene &cam,const std::shared_ptr<prosper::PrimaryCommandBuffer> &drawCmd,std::shared_ptr<prosper::RenderTarget> &rt);
+	DLLICLIENT const prosper::IPrContext &get_render_context();
+	DLLICLIENT void draw_scene(const IScene &cam,const std::shared_ptr<prosper::IPrimaryCommandBuffer> &drawCmd,std::shared_ptr<prosper::RenderTarget> &rt);
 	DLLICLIENT prosper::Shader *get_shader(const std::string &shaderName);
 	DLLICLIENT bool is_game_active();
 	DLLICLIENT std::shared_ptr<::Model> create_model(bool bAddReference=true);
 	DLLICLIENT bool is_game_initialized();
 	DLLICLIENT void load_as_gui_module();
-	DLLICLIENT void draw_frame(const std::function<void(const std::shared_ptr<prosper::PrimaryCommandBuffer>&,uint32_t)> &fDrawFrame);
+	DLLICLIENT void draw_frame(const std::function<void(const std::shared_ptr<prosper::IPrimaryCommandBuffer>&,uint32_t)> &fDrawFrame);
 };
 
 #endif
