@@ -10,6 +10,7 @@
 #include <prosper_render_pass.hpp>
 #include <prosper_framebuffer.hpp>
 #include <pragma/rendering/renderers/base_renderer.hpp>
+#include <pragma/rendering/scene/util_draw_scene_info.hpp>
 #include "pragma/gui/wiluahandlewrapper.h"
 #include "pragma/iscene.h"
 
@@ -29,9 +30,9 @@ static void add_game_callback(const std::string &identifier,const CallbackHandle
 	c_game->AddCallback(identifier,callback);
 }
 
-void iclient::draw_frame(const std::function<void(const std::shared_ptr<prosper::PrimaryCommandBuffer>&,uint32_t)> &fDrawFrame)
+void iclient::draw_frame(const std::function<void(const std::shared_ptr<prosper::IPrimaryCommandBuffer>&,uint32_t)> &fDrawFrame)
 {
-	c_engine->DrawFrame([&fDrawFrame](const std::shared_ptr<prosper::PrimaryCommandBuffer> &drawCmd,uint32_t nSwapchainImage) {
+	c_engine->GetRenderContext().DrawFrame([&fDrawFrame](const std::shared_ptr<prosper::IPrimaryCommandBuffer> &drawCmd,uint32_t nSwapchainImage) {
 		fDrawFrame(drawCmd,nSwapchainImage);
 	});
 }
@@ -99,6 +100,7 @@ bool iclient::protected_lua_call(int nargs,int nresults)
 	if(err == 0)
 		return true;
 	Lua::HandleLuaError(m_lua,static_cast<Lua::StatusCode>(err));
+	return false;
 }
 
 GLFWwindow *iclient::get_context_window()
@@ -113,19 +115,23 @@ std::shared_ptr<prosper::Texture> iclient::get_presentation_texture()
 	auto *renderer = scene->GetRenderer();
 	if(renderer == nullptr)
 		return nullptr;
-	return renderer->GetPresentationTexture();
+	return renderer->GetPresentationTexture()->shared_from_this();
 }
 
-const prosper::Context &iclient::get_render_context() {return *c_engine;}
+const prosper::IPrContext &iclient::get_render_context() {return c_engine->GetRenderContext();}
 
 IScene iclient::get_render_scene() {return IScene(c_game->GetRenderScene());}
 IScene iclient::get_main_scene() {return IScene(c_game->GetScene());}
 
-void iclient::draw_scene(const IScene &cam,const std::shared_ptr<prosper::PrimaryCommandBuffer> &drawCmd,std::shared_ptr<prosper::RenderTarget> &rt)
+void iclient::draw_scene(const IScene &cam,const std::shared_ptr<prosper::IPrimaryCommandBuffer> &drawCmd,std::shared_ptr<prosper::RenderTarget> &rt)
 {
+	util::DrawSceneInfo drawSceneInfo {};
+	drawSceneInfo.commandBuffer = drawCmd;
+	drawSceneInfo.outputImage = rt->GetTexture().GetImage().shared_from_this();
+
 	c_game->SetRenderClipPlane({});
 	c_game->SetRenderScene(std::static_pointer_cast<Scene>(cam.GetTarget()));
-		c_game->RenderScene(const_cast<std::shared_ptr<prosper::PrimaryCommandBuffer>&>(drawCmd),*rt->GetTexture()->GetImage());
+		c_game->RenderScene(drawSceneInfo);
 	c_game->SetRenderScene(nullptr);
 }
 
