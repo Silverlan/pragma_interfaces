@@ -16,7 +16,7 @@ private:
 public:
 	IScene(const std::shared_ptr<void>&);
 	const std::shared_ptr<void> &GetTarget() const;
-	static IScene Create(uint32_t width,uint32_t height);
+	static IScene Create();
 	Scene &GetInternalScene();
 	
 	uint32_t GetWidth() const;
@@ -24,10 +24,6 @@ public:
 
 	WorldEnvironment *GetWorldEnvironment() const;
 	void SetWorldEnvironment(WorldEnvironment *env);
-	std::shared_ptr<void> GetLightSourceListInfo() const;
-	void SetLightSourceListInfo(const std::shared_ptr<void> &lightSources);
-	void InitializeRenderTarget();
-	void LinkEntities(IScene &other);
 };
 
 #endif
