@@ -4,26 +4,28 @@
 #include "iclientmodule.h"
 #include "ivector.h"
 #include "imatrix.h"
+#include <sharedutils/util_weak_handle.hpp>
 #include <memory>
 #include <vector>
 
 class WorldEnvironment;
 class Scene;
+namespace pragma {class CSceneComponent;};
 class DLLICLIENT IScene
 {
-private:
-	std::shared_ptr<void> m_target;
 public:
-	IScene(const std::shared_ptr<void>&);
-	const std::shared_ptr<void> &GetTarget() const;
+	IScene(pragma::CSceneComponent &scene);
+	const pragma::CSceneComponent &GetTarget() const;
 	static IScene Create();
-	Scene &GetInternalScene();
+	pragma::CSceneComponent &GetInternalScene();
 	
 	uint32_t GetWidth() const;
 	uint32_t GetHeight() const;
 
 	WorldEnvironment *GetWorldEnvironment() const;
 	void SetWorldEnvironment(WorldEnvironment *env);
+private:
+	util::WeakHandle<pragma::CSceneComponent> m_target {};
 };
 
 #endif
