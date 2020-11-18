@@ -111,8 +111,8 @@ GLFWwindow *iclient::get_context_window()
 
 std::shared_ptr<prosper::Texture> iclient::get_presentation_texture()
 {
-	auto &scene = c_game->GetScene();
-	auto *renderer = scene->GetRenderer();
+	auto *scene = c_game->GetScene();
+	auto *renderer = scene ? scene->GetRenderer() : nullptr;
 	if(renderer == nullptr)
 		return nullptr;
 	return renderer->GetPresentationTexture()->shared_from_this();
@@ -120,8 +120,8 @@ std::shared_ptr<prosper::Texture> iclient::get_presentation_texture()
 
 const prosper::IPrContext &iclient::get_render_context() {return c_engine->GetRenderContext();}
 
-IScene iclient::get_render_scene() {return IScene(c_game->GetRenderScene());}
-IScene iclient::get_main_scene() {return IScene(c_game->GetScene());}
+IScene iclient::get_render_scene() {return IScene(*c_game->GetRenderScene());}
+IScene iclient::get_main_scene() {return IScene(*c_game->GetScene());}
 
 void iclient::draw_scene(const IScene &cam,const std::shared_ptr<prosper::IPrimaryCommandBuffer> &drawCmd,std::shared_ptr<prosper::RenderTarget> &rt)
 {
@@ -130,9 +130,9 @@ void iclient::draw_scene(const IScene &cam,const std::shared_ptr<prosper::IPrima
 	drawSceneInfo.outputImage = rt->GetTexture().GetImage().shared_from_this();
 
 	c_game->SetRenderClipPlane({});
-	c_game->SetRenderScene(std::static_pointer_cast<Scene>(cam.GetTarget()));
+	c_game->SetRenderScene(const_cast<pragma::CSceneComponent&>(cam.GetTarget()));
 		c_game->RenderScene(drawSceneInfo);
-	c_game->SetRenderScene(nullptr);
+	c_game->ResetRenderScene();
 }
 
 prosper::Shader *iclient::get_shader(const std::string &shaderName) {return c_engine->GetShader(shaderName).get();}
