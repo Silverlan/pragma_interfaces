@@ -59,8 +59,6 @@ set(ENABLE_STATIC_LIBRARY_FLAG 0)
 link_external_library(sharedutils)
 link_external_library(mathutil)
 link_external_library(vfilesystem)
-link_external_library(bullet)
-link_external_library(engine)
 link_external_library(shared)
 link_external_library(materialsystem)
 link_external_library(datasystem)
@@ -78,9 +76,7 @@ add_include_dir(boost)
 set(DEFINITIONS
 	USE_LUAJIT
 	GLM_FORCE_DEPTH_ZERO_TO_ONE
-	PHYS_ENGINE_BULLET
 	BOOST_ALL_DYN_LINK
-	BT_USE_DOUBLE_PRECISION
 	LUABIND_DYNAMIC_LINK
 )
 

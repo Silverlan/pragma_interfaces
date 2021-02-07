@@ -59,9 +59,6 @@ set(ENABLE_STATIC_LIBRARY_FLAG 0)
 link_external_library(sharedutils)
 link_external_library(mathutil)
 link_external_library(vfilesystem)
-link_external_library(bullet)
-link_external_library(cengine)
-link_external_library(engine)
 link_external_library(shared)
 link_external_library(client)
 link_external_library(luasystem)
@@ -70,13 +67,10 @@ link_external_library(materialsystem)
 link_external_library(cmaterialsystem)
 link_external_library(datasystem)
 link_external_library(prosper)
-link_external_library(vulkan)
-link_external_library(anvil)
 link_external_library(glfw)
 link_external_library(iglfw)
 link_external_library(wgui)
 link_external_library(alsoundsystem)
-link_external_library(glslang)
 link_external_library(luajit)
 if(WIN32)
 	add_external_library(lua)
@@ -84,16 +78,12 @@ endif()
 
 add_include_dir(glm)
 add_include_dir(boost)
-add_include_dir(anvil_build)
 
 set(DEFINITIONS
 	USE_LUAJIT
 	GLM_FORCE_DEPTH_ZERO_TO_ONE
-	PHYS_ENGINE_BULLET
 	BOOST_ALL_DYN_LINK
-	BT_USE_DOUBLE_PRECISION
 	LUABIND_DYNAMIC_LINK
-	ANVIL_VULKAN_CPP
 	DLLICLIENT_EX
 )
 
