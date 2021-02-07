@@ -2,7 +2,6 @@
 #ifdef _WIN32
 #include <Windows.h>
 #endif
-#include <btBulletCollisionCommon.h>
 #include <mathutil/eulerangles.h>
 #include <pragma/c_engine.h>
 #include <pragma/clientstate/clientstate.h>
@@ -15,7 +14,7 @@
 #include "pragma/gui/wiluahandlewrapper.h"
 #include "pragma/iscene.h"
 
-extern DLLCENGINE CEngine *c_engine;
+extern DLLCLIENT CEngine *c_engine;
 extern DLLCLIENT ClientState *client;
 extern DLLCLIENT CGame *c_game;
 

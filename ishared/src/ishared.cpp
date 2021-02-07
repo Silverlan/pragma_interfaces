@@ -10,12 +10,11 @@
 #pragma comment(lib,"mathutil.lib")
 #pragma comment(lib,"sharedutils.lib")
 #pragma comment(lib,"shared.lib")
-#pragma comment(lib,"engine.lib")
 #pragma comment(lib,"lua51.lib")
 #pragma comment(lib,"luasystem.lib")
 #pragma comment(lib,"luabind.lib")
 
-extern DLLENGINE Engine *engine;
+extern DLLNETWORK Engine *engine;
 
 void ishared::add_callback(lua_State *l,Callback cb,const CallbackHandle &f)
 {
