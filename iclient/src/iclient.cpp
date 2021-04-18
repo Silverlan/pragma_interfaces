@@ -13,6 +13,7 @@
 #include <pragma/entities/components/renderers/c_renderer_component.hpp>
 #include "pragma/gui/wiluahandlewrapper.h"
 #include "pragma/iscene.h"
+#include <prosper_window.hpp>
 
 extern DLLCLIENT CEngine *c_engine;
 extern DLLCLIENT ClientState *client;
@@ -106,7 +107,7 @@ bool iclient::protected_lua_call(int nargs,int nresults)
 GLFWwindow *iclient::get_context_window()
 {
 	auto &window = c_engine->GetWindow();
-	return const_cast<GLFWwindow*>(window.GetGLFWWindow());
+	return const_cast<GLFWwindow*>(window->GetGLFWWindow());
 }
 
 std::shared_ptr<prosper::Texture> iclient::get_presentation_texture()
