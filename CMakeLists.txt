@@ -10,4 +10,4 @@ set_target_properties(iclient PROPERTIES FOLDER module_interfaces)
 set_target_properties(iserver PROPERTIES FOLDER module_interfaces)
 set_target_properties(ishared PROPERTIES FOLDER module_interfaces)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
