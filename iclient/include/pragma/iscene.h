@@ -4,7 +4,7 @@
 #include "iclientmodule.h"
 #include "ivector.h"
 #include "imatrix.h"
-#include <sharedutils/util_weak_handle.hpp>
+#include <sharedutils/util_shared_handle.hpp>
 #include <memory>
 #include <vector>
 
@@ -25,7 +25,7 @@ public:
 	WorldEnvironment *GetWorldEnvironment() const;
 	void SetWorldEnvironment(WorldEnvironment *env);
 private:
-	util::WeakHandle<pragma::CSceneComponent> m_target {};
+	util::TWeakSharedHandle<pragma::CSceneComponent> m_target {};
 };
 
 #endif

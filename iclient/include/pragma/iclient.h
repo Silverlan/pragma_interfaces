@@ -13,9 +13,10 @@ extern "C" {
 #include <memory>
 #include <functional>
 #include "iclientmodule.h"
+#include <sharedutils/util_shared_handle.hpp>
 
-extern class __declspec(dllimport) WILuaHandleWrapper;
-extern class __declspec(dllimport) WIHandle;
+class WIBase;
+using WIHandle = util::TWeakSharedHandle<WIBase>;
 extern class CallbackHandle;
 struct GLFWwindow;
 class IScene;
