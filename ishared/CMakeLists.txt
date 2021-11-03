@@ -56,6 +56,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(ENABLE_STATIC_LIBRARY_FLAG 0)
 # set(PRECOMPILED_HEADER "stdafx")
 
+link_external_library(util_udm)
 link_external_library(sharedutils)
 link_external_library(mathutil)
 link_external_library(vfilesystem)
