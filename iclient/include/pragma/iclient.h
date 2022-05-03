@@ -58,7 +58,7 @@ namespace iclient
 	DLLICLIENT std::shared_ptr<::Model> create_model(bool bAddReference=true);
 	DLLICLIENT bool is_game_initialized();
 	DLLICLIENT void load_as_gui_module();
-	DLLICLIENT void draw_frame(const std::function<void(const std::shared_ptr<prosper::IPrimaryCommandBuffer>&,uint32_t)> &fDrawFrame);
+	DLLICLIENT void draw_frame(const std::function<void()> &fDrawFrame);
 };
 
 #endif

@@ -31,10 +31,10 @@ static void add_game_callback(const std::string &identifier,const CallbackHandle
 	c_game->AddCallback(identifier,callback);
 }
 
-void iclient::draw_frame(const std::function<void(const std::shared_ptr<prosper::IPrimaryCommandBuffer>&,uint32_t)> &fDrawFrame)
+void iclient::draw_frame(const std::function<void()> &fDrawFrame)
 {
-	c_engine->GetRenderContext().DrawFrame([&fDrawFrame](const std::shared_ptr<prosper::IPrimaryCommandBuffer> &drawCmd,uint32_t nSwapchainImage) {
-		fDrawFrame(drawCmd,nSwapchainImage);
+	c_engine->GetRenderContext().DrawFrame([&fDrawFrame]() {
+		fDrawFrame();
 	});
 }
 
