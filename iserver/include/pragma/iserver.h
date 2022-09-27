@@ -13,13 +13,20 @@ extern "C" {
 #include <memory>
 
 #ifdef DLLISERVER_EX
-	#define DLLISERVER __declspec(dllexport)
+    #ifdef __linux__
+        #define DLLISERVER __attribute__((visibility("default")))
+    #else
+        #define DLLISERVER  __declspec(dllexport)
+    #endif
 #else
-	#define DLLISERVER __declspec(dllimport)
+    #ifdef __linux__
+        #define DLLISERVER
+    #else
+        #define DLLISERVER  __declspec(dllimport)
+    #endif
 #endif
 
-extern class __declspec(dllimport) WILuaHandleWrapper;
-extern class __declspec(dllimport) WIHandle;
+
 extern class CallbackHandle;
 class Model;
 namespace iserver
