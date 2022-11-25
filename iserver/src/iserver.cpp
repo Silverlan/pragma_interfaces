@@ -7,8 +7,6 @@
 #include <sharedutils/util_cpu_profiler.hpp>
 #include <pragma/serverstate/serverstate.h>
 
-#pragma comment(lib,"lua51.lib")
-
 extern DLLSERVER ServerState *server;
 extern DLLSERVER SGame *s_game;
 static void add_server_callback(const std::string &identifier,const CallbackHandle &callback)
