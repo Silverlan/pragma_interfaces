@@ -10,21 +10,22 @@
 
 class WorldEnvironment;
 class Scene;
-namespace pragma {class CSceneComponent;};
-class DLLICLIENT IScene
-{
-public:
+namespace pragma {
+	class CSceneComponent;
+};
+class DLLICLIENT IScene {
+  public:
 	IScene(pragma::CSceneComponent &scene);
 	const pragma::CSceneComponent &GetTarget() const;
 	static IScene Create();
 	pragma::CSceneComponent &GetInternalScene();
-	
+
 	uint32_t GetWidth() const;
 	uint32_t GetHeight() const;
 
 	WorldEnvironment *GetWorldEnvironment() const;
 	void SetWorldEnvironment(WorldEnvironment *env);
-private:
+  private:
 	util::TWeakSharedHandle<pragma::CSceneComponent> m_target {};
 };
 

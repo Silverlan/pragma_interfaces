@@ -4,11 +4,10 @@
 #include "iclientmodule.h"
 #include <memory>
 
-#pragma pack(push,1)
-class DLLICLIENT IVector3
-{
-public:
-	IVector3(float x,float y,float z);
+#pragma pack(push, 1)
+class DLLICLIENT IVector3 {
+  public:
+	IVector3(float x, float y, float z);
 	IVector3();
 	float x;
 	float y;
