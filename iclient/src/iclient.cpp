@@ -8,7 +8,6 @@
 #include <image/prosper_render_target.hpp>
 #include <prosper_render_pass.hpp>
 #include <prosper_framebuffer.hpp>
-#include <pragma/rendering/renderers/base_renderer.hpp>
 #include <pragma/rendering/scene/util_draw_scene_info.hpp>
 #include <pragma/entities/components/renderers/c_renderer_component.hpp>
 #include "pragma/gui/wiluahandlewrapper.h"
