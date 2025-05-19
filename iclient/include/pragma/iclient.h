@@ -17,7 +17,7 @@ extern "C" {
 
 class WIBase;
 using WIHandle = util::TWeakSharedHandle<WIBase>;
-extern class CallbackHandle;
+class CallbackHandle;
 struct GLFWwindow;
 class IScene;
 class Model;
