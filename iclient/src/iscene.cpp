@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: (c) 2019 Silverlan <opensource@pragma-engine.com>
+// SPDX-License-Identifier: MIT
+
 #include "pragma/iscene.h"
 #include <pragma/c_engine.h>
 #include <pragma/clientstate/clientstate.h>
