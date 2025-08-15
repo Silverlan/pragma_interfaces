@@ -10,6 +10,8 @@
 #include <pragma/lua/libraries/lfile.h>
 #include <pragma/lua/ldefinitions.h>
 
+import pragma.scripting.lua;
+
 extern DLLNETWORK Engine *engine;
 
 void ishared::add_callback(lua_State *l, Callback cb, const CallbackHandle &f)
@@ -26,11 +28,7 @@ void ishared::add_callback(lua_State *l, Callback cb, const CallbackHandle &f)
 
 bool ishared::protected_lua_call(lua_State *l, int nargs, int nresults)
 {
-	auto err = Lua::ProtectedCall(l, nargs, nresults);
-	if(err == Lua::StatusCode::Ok)
-		return true;
-	Lua::HandleLuaError(l, err);
-	return false;
+	return pragma::scripting::lua::protected_call(l, nargs, nresults) == Lua::StatusCode::Ok;
 }
 
 bool ishared::validate_file_write_operation(lua_State *l, std::string &path) { return Lua::file::validate_write_operation(l, path); }

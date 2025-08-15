@@ -10,6 +10,8 @@
 #include <sharedutils/util_cpu_profiler.hpp>
 #include <pragma/serverstate/serverstate.h>
 
+import pragma.scripting.lua;
+
 extern DLLSERVER ServerState *server;
 extern DLLSERVER SGame *s_game;
 static void add_server_callback(const std::string &identifier, const CallbackHandle &callback) { server->AddCallback(identifier, callback); }
@@ -55,10 +57,6 @@ double iserver::last_think() { return server->LastThink(); }
 
 bool iserver::protected_lua_call(int nargs, int nresults)
 {
-	lua_State *m_lua = server->GetLuaState();
-	int err = lua_pcall(m_lua, nargs, nresults, 0);
-	if(err == 0)
-		return true;
-	Lua::HandleLuaError(m_lua, static_cast<Lua::StatusCode>(err));
-	return false;
+	lua_State *l = server->GetLuaState();
+	return pragma::scripting::lua::protected_call(l, nargs, nresults) == Lua::StatusCode::Ok;
 }

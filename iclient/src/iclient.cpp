@@ -17,6 +17,8 @@
 #include "pragma/iscene.h"
 #include <prosper_window.hpp>
 
+import pragma.scripting.lua;
+
 extern DLLCLIENT CEngine *c_engine;
 extern DLLCLIENT ClientState *client;
 extern DLLCLIENT CGame *c_game;
@@ -89,12 +91,8 @@ double iclient::last_think() { return client->LastThink(); }
 
 bool iclient::protected_lua_call(int nargs, int nresults)
 {
-	lua_State *m_lua = client->GetLuaState();
-	int err = lua_pcall(m_lua, nargs, nresults, 0);
-	if(err == 0)
-		return true;
-	Lua::HandleLuaError(m_lua, static_cast<Lua::StatusCode>(err));
-	return false;
+	lua_State *l = client->GetLuaState();
+	return pragma::scripting::lua::protected_call(l, nargs, nresults) == Lua::StatusCode::Ok;
 }
 
 GLFWwindow *iclient::get_context_window()
