@@ -13,11 +13,12 @@
 #include <prosper_framebuffer.hpp>
 #include <pragma/rendering/scene/util_draw_scene_info.hpp>
 #include <pragma/entities/components/renderers/c_renderer_component.hpp>
+#include <scripting/lua/lua.hpp>
 #include "pragma/gui/wiluahandlewrapper.h"
 #include "pragma/iscene.h"
 #include <prosper_window.hpp>
 
-import pragma.scripting.lua;
+// import pragma.scripting.lua;
 
 extern DLLCLIENT CEngine *c_engine;
 extern DLLCLIENT ClientState *client;

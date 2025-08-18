@@ -9,8 +9,9 @@
 #include <mathutil/eulerangles.h>
 #include <sharedutils/util_cpu_profiler.hpp>
 #include <pragma/serverstate/serverstate.h>
+#include <scripting/lua/lua.hpp>
 
-import pragma.scripting.lua;
+// import pragma.scripting.lua;
 
 extern DLLSERVER ServerState *server;
 extern DLLSERVER SGame *s_game;
