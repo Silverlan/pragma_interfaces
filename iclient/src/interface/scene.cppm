@@ -3,7 +3,7 @@
 
 module;
 
-#include "iclient_definitions.hpp"
+#include "definitions.hpp"
 #include <sharedutils/util_shared_handle.hpp>
 #include <pragma/c_engine.h>
 #include <pragma/clientstate/clientstate.h>

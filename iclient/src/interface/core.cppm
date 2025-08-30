@@ -7,7 +7,7 @@ module;
 #include <pragma/c_engine.h>
 #include <pragma/clientstate/clientstate.h>
 #include <image/prosper_render_target.hpp>
-#include "iclient_definitions.hpp"
+#include "definitions.hpp"
 #include <prosper_framebuffer.hpp>
 #include <pragma/rendering/scene/util_draw_scene_info.hpp>
 #include <pragma/entities/components/renderers/c_renderer_component.hpp>

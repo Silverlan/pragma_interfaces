@@ -1,7 +1,8 @@
 // SPDX-FileCopyrightText: (c) 2019 Silverlan <opensource@pragma-engine.com>
 // SPDX-License-Identifier: MIT
 
-#include "pragma/iserver.h"
+module;
+
 #ifdef _WIN32
 #include <Windows.h>
 #endif
@@ -10,6 +11,10 @@
 #include <sharedutils/util_cpu_profiler.hpp>
 #include <pragma/serverstate/serverstate.h>
 #include <scripting/lua/lua.hpp>
+
+module pragma.iserver;
+
+import :core;
 
 // import pragma.scripting.lua;
 
