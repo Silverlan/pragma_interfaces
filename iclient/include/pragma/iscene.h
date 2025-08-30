@@ -5,7 +5,6 @@
 #define __ISCENE_H__
 
 #include "iclientmodule.h"
-#include "imatrix.h"
 #include <sharedutils/util_shared_handle.hpp>
 #include <memory>
 #include <vector>
