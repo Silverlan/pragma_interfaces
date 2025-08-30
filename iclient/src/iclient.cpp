@@ -15,9 +15,9 @@
 #include <pragma/entities/components/renderers/c_renderer_component.hpp>
 #include <scripting/lua/lua.hpp>
 #include "pragma/gui/wiluahandlewrapper.h"
-#include "pragma/iscene.h"
 #include <prosper_window.hpp>
 
+import pragma.iclient;
 // import pragma.scripting.lua;
 
 extern DLLCLIENT CEngine *c_engine;
