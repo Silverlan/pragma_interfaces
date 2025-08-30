@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: (c) 2019 Silverlan <opensource@pragma-engine.com>
 // SPDX-License-Identifier: MIT
 
-#ifndef __ICLIENTMODULE_H__
-#define __ICLIENTMODULE_H__
+#ifndef __ICLIENT_DEFINITIONS_HPP__
+#define __ICLIENT_DEFINITIONS_HPP__
 
 #ifdef DLLICLIENT_EX
 #ifdef __linux__

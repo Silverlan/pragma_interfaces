@@ -3,7 +3,7 @@
 
 module;
 
-#include "pragma/iclientmodule.h"
+#include "iclient_definitions.hpp"
 #include <memory>
 
 export module pragma.iclient:vector;
