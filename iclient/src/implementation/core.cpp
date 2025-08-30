@@ -1,7 +1,8 @@
 // SPDX-FileCopyrightText: (c) 2019 Silverlan <opensource@pragma-engine.com>
 // SPDX-License-Identifier: MIT
 
-#include "pragma/iclient.h"
+module;
+
 #ifdef _WIN32
 #include <Windows.h>
 #endif
@@ -17,7 +18,10 @@
 #include "pragma/gui/wiluahandlewrapper.h"
 #include <prosper_window.hpp>
 
-import pragma.iclient;
+module pragma.iclient;
+
+import :core;
+
 // import pragma.scripting.lua;
 
 extern DLLCLIENT CEngine *c_engine;

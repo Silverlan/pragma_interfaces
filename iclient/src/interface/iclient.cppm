@@ -4,6 +4,7 @@
 module;
 
 export module pragma.iclient;
+export import :core;
 export import :matrix;
 export import :scene;
 export import :vector;

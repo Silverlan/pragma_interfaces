@@ -1,43 +1,25 @@
 // SPDX-FileCopyrightText: (c) 2019 Silverlan <opensource@pragma-engine.com>
 // SPDX-License-Identifier: MIT
 
-#ifndef __ICLIENT_H__
-#define __ICLIENT_H__
+module;
 
-#define NULL 0
+#include <mathutil/eulerangles.h>
+#include <pragma/c_engine.h>
+#include <pragma/clientstate/clientstate.h>
+#include <image/prosper_render_target.hpp>
+#include "pragma/iclientmodule.h"
+#include <prosper_framebuffer.hpp>
+#include <pragma/rendering/scene/util_draw_scene_info.hpp>
+#include <pragma/entities/components/renderers/c_renderer_component.hpp>
+#include <scripting/lua/lua.hpp>
+#include "pragma/gui/wiluahandlewrapper.h"
+#include <prosper_window.hpp>
 
-extern "C" {
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-}
+export module pragma.iclient:core;
 
-#include <string>
-#include <memory>
-#include <functional>
-#include "iclientmodule.h"
-#include <sharedutils/util_shared_handle.hpp>
+import :scene;
 
-class WIBase;
-using WIHandle = util::TWeakSharedHandle<WIBase>;
-class CallbackHandle;
-struct GLFWwindow;
-class IScene;
-class Model;
-class WIBase;
-namespace prosper {
-	class RenderTarget;
-	class IPrContext;
-	class Shader;
-	class IPrimaryCommandBuffer;
-	class Texture;
-};
-namespace luabind {
-	namespace adl {
-		class object;
-	};
-};
-namespace iclient {
+export namespace iclient {
 	enum class Callback : uint32_t { Think = 0, Draw, DrawScene, OnLuaInitialized, OnGameStart, EndGame, OnGameInitialized, PreRender, PostRender, EngineDraw };
 	DLLICLIENT const CallbackHandle &add_callback(Callback cb, const CallbackHandle &f);
 	DLLICLIENT lua_State *get_lua_state();
@@ -60,5 +42,3 @@ namespace iclient {
 	DLLICLIENT void load_as_gui_module();
 	DLLICLIENT void draw_frame(const std::function<void()> &fDrawFrame);
 };
-
-#endif
