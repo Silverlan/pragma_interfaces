@@ -1,7 +1,8 @@
 // SPDX-FileCopyrightText: (c) 2019 Silverlan <opensource@pragma-engine.com>
 // SPDX-License-Identifier: MIT
 
-#include "pragma/ishared.hpp"
+module;
+
 #include <pragma/level/mapinfo.h>
 #include <pragma/lua/libraries/lfile.h>
 #include <pragma/engine.h>
@@ -10,6 +11,10 @@
 #include <pragma/lua/libraries/lfile.h>
 #include <pragma/lua/ldefinitions.h>
 #include <scripting/lua/lua.hpp>
+
+module pragma.ishared;
+
+import :core;
 
 // import pragma.scripting.lua;
 
