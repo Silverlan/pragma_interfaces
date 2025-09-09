@@ -4,13 +4,14 @@
 module;
 
 #include <pragma/c_engine.h>
-#include <pragma/clientstate/clientstate.h>
 
 module pragma.iclient;
 
 import :scene;
 
-extern DLLCLIENT CGame *c_game;
+import pragma.client.client_state;
+
+extern CGame *c_game;
 
 IScene::IScene(pragma::CSceneComponent &scene) : m_target(scene.GetHandle<pragma::CSceneComponent>()) {}
 

@@ -4,45 +4,51 @@
 module;
 
 #ifdef _WIN32
+#define NOMINMAX
 #include <Windows.h>
 #endif
+#include "pragma/engine.h"
 #include <materialmanager.h>
 #include <mathutil/eulerangles.h>
 #include <sharedutils/util_cpu_profiler.hpp>
-#include <pragma/serverstate/serverstate.h>
 #include <scripting/lua/lua.hpp>
 
 module pragma.iserver;
 
 import :core;
 
+import pragma.server.game;
+import pragma.server.server_state;
+
 // import pragma.scripting.lua;
 
-extern DLLSERVER ServerState *server;
-extern DLLSERVER SGame *s_game;
-static void add_server_callback(const std::string &identifier, const CallbackHandle &callback) { server->AddCallback(identifier, callback); }
+static ServerState *sv() {return dynamic_cast<ServerState*>(pragma::get_server_state());}
+static SGame *sg() {return sv()->GetGameState();}
+
+static void add_server_callback(const std::string &identifier, const CallbackHandle &callback) { sv()->AddCallback(identifier, callback); }
 
 static void add_game_callback(const std::string &identifier, const CallbackHandle &callback)
 {
-	if(s_game == nullptr)
+    auto *game = sg();
+	if(game == nullptr)
 		return;
-	s_game->AddCallback(identifier, callback);
+	game->AddCallback(identifier, callback);
 }
 
 void iserver::add_callback(Callback cb, const CallbackHandle &f)
 {
 	switch(cb) {
 	case Callback::Think:
-		server->AddThinkCallback(f);
+		sv()->AddThinkCallback(f);
 		break;
 	case Callback::OnLuaInitialized:
 		add_game_callback("OnLuaInitialized", f);
 		break;
 	case Callback::OnGameStart:
-		server->AddCallback("OnGameStart", f);
+		sv()->AddCallback("OnGameStart", f);
 		break;
 	case Callback::EndGame:
-		server->AddCallback("EndGame", f);
+		sv()->AddCallback("EndGame", f);
 		break;
 	case Callback::OnGameInitialized:
 		add_game_callback("OnGameInitialized", f);
@@ -50,19 +56,19 @@ void iserver::add_callback(Callback cb, const CallbackHandle &f)
 	};
 }
 
-bool iserver::is_game_active() { return server->IsGameActive(); }
-bool iserver::is_game_initialized() { return is_game_active() && server->GetGameState()->IsGameInitialized(); }
+bool iserver::is_game_active() { return sv()->IsGameActive(); }
+bool iserver::is_game_initialized() { return is_game_active() && sv()->GetGameState()->IsGameInitialized(); }
 
-std::shared_ptr<::Model> iserver::create_model(bool bAddReference) { return s_game->CreateModel(bAddReference); }
+std::shared_ptr<::Model> iserver::create_model(bool bAddReference) { return sg()->CreateModel(bAddReference); }
 
-lua_State *iserver::get_lua_state() { return server->GetLuaState(); }
+lua_State *iserver::get_lua_state() { return sv()->GetLuaState(); }
 
-double iserver::real_time() { return server->RealTime(); }
-double iserver::delta_time() { return server->DeltaTime(); }
-double iserver::last_think() { return server->LastThink(); }
+double iserver::real_time() { return sv()->RealTime(); }
+double iserver::delta_time() { return sv()->DeltaTime(); }
+double iserver::last_think() { return sv()->LastThink(); }
 
 bool iserver::protected_lua_call(int nargs, int nresults)
 {
-	lua_State *l = server->GetLuaState();
+	lua_State *l = sv()->GetLuaState();
 	return pragma::scripting::lua::protected_call(l, nargs, nresults) == Lua::StatusCode::Ok;
 }

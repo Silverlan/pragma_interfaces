@@ -8,7 +8,6 @@ module;
 #endif
 #include <mathutil/eulerangles.h>
 #include <pragma/c_engine.h>
-#include <pragma/clientstate/clientstate.h>
 #include <image/prosper_render_target.hpp>
 #include <prosper_render_pass.hpp>
 #include <prosper_framebuffer.hpp>
@@ -22,11 +21,11 @@ module pragma.iclient;
 
 import :core;
 
+import pragma.client.client_state;
 // import pragma.scripting.lua;
 
-extern DLLCLIENT CEngine *c_engine;
-extern DLLCLIENT ClientState *client;
-extern DLLCLIENT CGame *c_game;
+static ClientState *cl() {return dynamic_cast<ClientState*>(pragma::get_client_state());}
+static CGame *cg() {return cl()->GetGameState();}
 
 static void add_client_callback(const std::string &identifier, const CallbackHandle &callback) { client->AddCallback(identifier, callback); }
 
@@ -39,7 +38,7 @@ static void add_game_callback(const std::string &identifier, const CallbackHandl
 
 void iclient::draw_frame(const std::function<void()> &fDrawFrame)
 {
-	c_engine->GetRenderContext().DrawFrame([&fDrawFrame]() { fDrawFrame(); });
+	pragma::get_cengine()->GetRenderContext().DrawFrame([&fDrawFrame]() { fDrawFrame(); });
 }
 
 const CallbackHandle &iclient::add_callback(Callback cb, const CallbackHandle &f)
@@ -72,8 +71,8 @@ const CallbackHandle &iclient::add_callback(Callback cb, const CallbackHandle &f
 	case Callback::PostRender:
 		client->AddCallback("PostRender", f);
 		break;
-	case Callback::EngineDraw:
-		c_engine->AddCallback("Draw", f);
+		case Callback::EngineDraw:
+		pragma::get_cengine()->AddCallback("Draw", f);
 		break;
 	};
 	return f;
@@ -102,7 +101,7 @@ bool iclient::protected_lua_call(int nargs, int nresults)
 
 GLFWwindow *iclient::get_context_window()
 {
-	auto &window = c_engine->GetWindow();
+	auto &window = pragma::get_cengine()->GetWindow();
 	return const_cast<GLFWwindow *>(window->GetGLFWWindow());
 }
 
@@ -115,7 +114,7 @@ std::shared_ptr<prosper::Texture> iclient::get_presentation_texture()
 	return renderer->GetPresentationTexture()->shared_from_this();
 }
 
-const prosper::IPrContext &iclient::get_render_context() { return c_engine->GetRenderContext(); }
+const prosper::IPrContext &iclient::get_render_context() { return pragma::get_cengine()->GetRenderContext(); }
 
 IScene iclient::get_render_scene() { return IScene(*c_game->GetRenderScene()); }
 IScene iclient::get_main_scene() { return IScene(*c_game->GetScene()); }
@@ -132,4 +131,4 @@ void iclient::draw_scene(const IScene &cam, const std::shared_ptr<prosper::IPrim
 	c_game->ResetRenderScene();
 }
 
-prosper::Shader *iclient::get_shader(const std::string &shaderName) { return c_engine->GetShader(shaderName).get(); }
+prosper::Shader *iclient::get_shader(const std::string &shaderName) { return pragma::get_cengine()->GetShader(shaderName).get(); }

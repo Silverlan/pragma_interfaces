@@ -5,7 +5,6 @@ module;
 
 #include <mathutil/eulerangles.h>
 #include <pragma/c_engine.h>
-#include <pragma/clientstate/clientstate.h>
 #include <image/prosper_render_target.hpp>
 #include "definitions.hpp"
 #include <prosper_framebuffer.hpp>
@@ -18,6 +17,8 @@ module;
 export module pragma.iclient:core;
 
 import :scene;
+
+import pragma.client.client_state;
 
 export namespace iclient {
 	enum class Callback : uint32_t { Think = 0, Draw, DrawScene, OnLuaInitialized, OnGameStart, EndGame, OnGameInitialized, PreRender, PostRender, EngineDraw };
