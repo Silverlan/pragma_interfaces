@@ -4,8 +4,6 @@
 module;
 
 #include "definitions.hpp"
-#include <pragma/lua/luaapi.h>
-#include <pragma/model/model.h>
 
 export module pragma.iserver:core;
 

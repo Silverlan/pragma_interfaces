@@ -6,7 +6,6 @@ module;
 #include "definitions.hpp"
 #include <cinttypes>
 #include <string>
-#include <pragma/lua/luaapi.h>
 #include <sharedutils/functioncallback.h>
 
 export module pragma.ishared:core;

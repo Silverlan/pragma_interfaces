@@ -3,26 +3,15 @@
 
 module;
 
-#include <pragma/level/mapinfo.h>
-#include <pragma/lua/libraries/lfile.h>
-#include <pragma/engine.h>
-#include <pragma/lua/lua_doc.hpp>
-#include <pragma/networkstate/networkstate.h>
-#include <pragma/lua/libraries/lfile.h>
-#include <pragma/lua/ldefinitions.h>
-#include <scripting/lua/lua.hpp>
-
 module pragma.ishared;
 
 import :core;
 
 // import pragma.scripting.lua;
 
-extern DLLNETWORK Engine *engine;
-
 void ishared::add_callback(lua_State *l, Callback cb, const CallbackHandle &f)
 {
-	auto *nw = engine->GetNetworkState(l);
+	auto *nw = Engine::Get()->GetNetworkState(l);
 	if(nw == nullptr)
 		return;
 	switch(cb) {

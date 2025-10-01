@@ -4,21 +4,16 @@
 module;
 
 #include <mathutil/eulerangles.h>
-#include <pragma/c_engine.h>
 #include <image/prosper_render_target.hpp>
 #include "definitions.hpp"
 #include <prosper_framebuffer.hpp>
-#include <pragma/rendering/scene/util_draw_scene_info.hpp>
-#include <pragma/entities/components/renderers/c_renderer_component.hpp>
-#include <scripting/lua/lua.hpp>
-#include "pragma/gui/wiluahandlewrapper.h"
 #include <prosper_window.hpp>
 
 export module pragma.iclient:core;
 
 import :scene;
 
-import pragma.client.client_state;
+import pragma.client;
 
 export namespace iclient {
 	enum class Callback : uint32_t { Think = 0, Draw, DrawScene, OnLuaInitialized, OnGameStart, EndGame, OnGameInitialized, PreRender, PostRender, EngineDraw };

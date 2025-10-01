@@ -7,33 +7,35 @@ module;
 #include <Windows.h>
 #endif
 #include <mathutil/eulerangles.h>
-#include <pragma/c_engine.h>
 #include <image/prosper_render_target.hpp>
 #include <prosper_render_pass.hpp>
 #include <prosper_framebuffer.hpp>
-#include <pragma/rendering/scene/util_draw_scene_info.hpp>
-#include <pragma/entities/components/renderers/c_renderer_component.hpp>
-#include <scripting/lua/lua.hpp>
-#include "pragma/gui/wiluahandlewrapper.h"
 #include <prosper_window.hpp>
 
 module pragma.iclient;
 
 import :core;
 
-import pragma.client.client_state;
+import pragma.client;
 // import pragma.scripting.lua;
+
+template<typename TCPPM>
+TCPPM *CGame::GetScene() { return static_cast<pragma::CSceneComponent*>(m_scene.get()); }
+template<typename TCPPM>
+TCPPM *CGame::GetRenderScene() { return static_cast<pragma::CSceneComponent*>(m_renderScene.get()); }
+template<typename TCPPM>
+void CGame::SetRenderScene(TCPPM &scene) { m_renderScene = scene.GetHandle(); }
 
 static ClientState *cl() {return dynamic_cast<ClientState*>(pragma::get_client_state());}
 static CGame *cg() {return cl()->GetGameState();}
 
-static void add_client_callback(const std::string &identifier, const CallbackHandle &callback) { client->AddCallback(identifier, callback); }
+static void add_client_callback(const std::string &identifier, const CallbackHandle &callback) { pragma::get_client_state()->AddCallback(identifier, callback); }
 
 static void add_game_callback(const std::string &identifier, const CallbackHandle &callback)
 {
-	if(c_game == nullptr)
+	if(pragma::get_cgame() == nullptr)
 		return;
-	c_game->AddCallback(identifier, callback);
+	pragma::get_cgame()->AddCallback(identifier, callback);
 }
 
 void iclient::draw_frame(const std::function<void()> &fDrawFrame)
@@ -43,6 +45,7 @@ void iclient::draw_frame(const std::function<void()> &fDrawFrame)
 
 const CallbackHandle &iclient::add_callback(Callback cb, const CallbackHandle &f)
 {
+	auto *client = pragma::get_client_state();
 	switch(cb) {
 	case Callback::Think:
 		client->AddThinkCallback(f);
@@ -78,24 +81,24 @@ const CallbackHandle &iclient::add_callback(Callback cb, const CallbackHandle &f
 	return f;
 }
 
-bool iclient::is_game_active() { return client->IsGameActive(); }
-bool iclient::is_game_initialized() { return is_game_active() && client->GetGameState()->IsGameInitialized(); }
-void iclient::load_as_gui_module() { client->InitializeGUIModule(); }
+bool iclient::is_game_active() { return pragma::get_client_state()->IsGameActive(); }
+bool iclient::is_game_initialized() { return is_game_active() && pragma::get_client_state()->GetGameState()->IsGameInitialized(); }
+void iclient::load_as_gui_module() { pragma::get_client_state()->InitializeGUIModule(); }
 
-std::shared_ptr<::Model> iclient::create_model(bool bAddReference) { return c_game->CreateModel(bAddReference); }
+std::shared_ptr<::Model> iclient::create_model(bool bAddReference) { return pragma::get_cgame()->CreateModel(bAddReference); }
 
-lua_State *iclient::get_lua_state() { return client->GetLuaState(); }
-lua_State *iclient::get_gui_lua_state() { return client->GetGUILuaState(); }
+lua_State *iclient::get_lua_state() { return pragma::get_client_state()->GetLuaState(); }
+lua_State *iclient::get_gui_lua_state() { return pragma::get_client_state()->GetGUILuaState(); }
 
-void iclient::add_gui_lua_wrapper_factory(const std::function<luabind::object(lua_State *, WIBase &)> &f) { client->AddGUILuaWrapperFactory(f); }
+void iclient::add_gui_lua_wrapper_factory(const std::function<luabind::object(lua_State *, WIBase &)> &f) { pragma::get_client_state()->AddGUILuaWrapperFactory(f); }
 
-double iclient::real_time() { return client->RealTime(); }
-double iclient::delta_time() { return client->DeltaTime(); }
-double iclient::last_think() { return client->LastThink(); }
+double iclient::real_time() { return pragma::get_client_state()->RealTime(); }
+double iclient::delta_time() { return pragma::get_client_state()->DeltaTime(); }
+double iclient::last_think() { return pragma::get_client_state()->LastThink(); }
 
 bool iclient::protected_lua_call(int nargs, int nresults)
 {
-	lua_State *l = client->GetLuaState();
+	lua_State *l = pragma::get_client_state()->GetLuaState();
 	return pragma::scripting::lua::protected_call(l, nargs, nresults) == Lua::StatusCode::Ok;
 }
 
@@ -105,10 +108,12 @@ GLFWwindow *iclient::get_context_window()
 	return const_cast<GLFWwindow *>(window->GetGLFWWindow());
 }
 
+template<typename TCPPM>
+	TCPPM *pragma::CSceneComponent::GetRenderer() { return static_cast<TCPPM*>(m_renderer.get()); }
 std::shared_ptr<prosper::Texture> iclient::get_presentation_texture()
 {
-	auto *scene = c_game->GetScene();
-	auto *renderer = scene ? scene->GetRenderer() : nullptr;
+	auto *scene = pragma::get_cgame()->GetScene<pragma::CSceneComponent>();
+	auto *renderer = scene ? scene->GetRenderer<pragma::CRendererComponent>() : nullptr;
 	if(renderer == nullptr)
 		return nullptr;
 	return renderer->GetPresentationTexture()->shared_from_this();
@@ -116,8 +121,8 @@ std::shared_ptr<prosper::Texture> iclient::get_presentation_texture()
 
 const prosper::IPrContext &iclient::get_render_context() { return pragma::get_cengine()->GetRenderContext(); }
 
-IScene iclient::get_render_scene() { return IScene(*c_game->GetRenderScene()); }
-IScene iclient::get_main_scene() { return IScene(*c_game->GetScene()); }
+IScene iclient::get_render_scene() { return IScene(*pragma::get_cgame()->GetRenderScene<pragma::CSceneComponent>()); }
+IScene iclient::get_main_scene() { return IScene(*pragma::get_cgame()->GetScene<pragma::CSceneComponent>()); }
 
 void iclient::draw_scene(const IScene &cam, const std::shared_ptr<prosper::IPrimaryCommandBuffer> &drawCmd, std::shared_ptr<prosper::RenderTarget> &rt)
 {
@@ -125,10 +130,10 @@ void iclient::draw_scene(const IScene &cam, const std::shared_ptr<prosper::IPrim
 	drawSceneInfo.commandBuffer = drawCmd;
 	drawSceneInfo.outputImage = rt->GetTexture().GetImage().shared_from_this();
 
-	c_game->SetRenderClipPlane({});
-	c_game->SetRenderScene(const_cast<pragma::CSceneComponent &>(cam.GetTarget()));
-	c_game->RenderScene(drawSceneInfo);
-	c_game->ResetRenderScene();
+	pragma::get_cgame()->SetRenderClipPlane({});
+	pragma::get_cgame()->SetRenderScene(const_cast<pragma::CSceneComponent &>(cam.GetTarget()));
+	pragma::get_cgame()->RenderScene(drawSceneInfo);
+	pragma::get_cgame()->ResetRenderScene();
 }
 
 prosper::Shader *iclient::get_shader(const std::string &shaderName) { return pragma::get_cengine()->GetShader(shaderName).get(); }

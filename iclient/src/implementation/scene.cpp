@@ -3,13 +3,11 @@
 
 module;
 
-#include <pragma/c_engine.h>
-
 module pragma.iclient;
 
 import :scene;
 
-import pragma.client.client_state;
+import pragma.client;
 
 extern CGame *c_game;
 

@@ -7,11 +7,9 @@ module;
 #define NOMINMAX
 #include <Windows.h>
 #endif
-#include "pragma/engine.h"
 #include <materialmanager.h>
 #include <mathutil/eulerangles.h>
 #include <sharedutils/util_cpu_profiler.hpp>
-#include <scripting/lua/lua.hpp>
 
 module pragma.iserver;
 

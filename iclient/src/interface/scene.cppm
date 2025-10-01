@@ -4,14 +4,11 @@
 module;
 
 #include "definitions.hpp"
-#include "pragma/entities/components/c_scene_component.hpp"
 #include <sharedutils/util_shared_handle.hpp>
-#include <pragma/c_engine.h>
 
 export module pragma.iclient:scene;
 
-import pragma.client.client_state;
-import pragma.client.entities.components;
+import pragma.client;
 
 export class DLLICLIENT IScene {
   public:
