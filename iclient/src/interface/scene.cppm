@@ -4,7 +4,6 @@
 module;
 
 #include "definitions.hpp"
-#include <sharedutils/util_shared_handle.hpp>
 
 export module pragma.iclient:scene;
 

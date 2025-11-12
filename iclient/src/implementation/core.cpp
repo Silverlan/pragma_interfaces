@@ -6,11 +6,6 @@ module;
 #ifdef _WIN32
 #include <Windows.h>
 #endif
-#include <mathutil/eulerangles.h>
-#include <image/prosper_render_target.hpp>
-#include <prosper_render_pass.hpp>
-#include <prosper_framebuffer.hpp>
-#include <prosper_window.hpp>
 
 module pragma.iclient;
 
@@ -18,13 +13,6 @@ import :core;
 
 import pragma.client;
 // import pragma.scripting.lua;
-
-template<typename TCPPM>
-TCPPM *CGame::GetScene() { return static_cast<pragma::CSceneComponent*>(m_scene.get()); }
-template<typename TCPPM>
-TCPPM *CGame::GetRenderScene() { return static_cast<pragma::CSceneComponent*>(m_renderScene.get()); }
-template<typename TCPPM>
-void CGame::SetRenderScene(TCPPM &scene) { m_renderScene = scene.GetHandle(); }
 
 static ClientState *cl() {return dynamic_cast<ClientState*>(pragma::get_client_state());}
 static CGame *cg() {return cl()->GetGameState();}
@@ -85,12 +73,12 @@ bool iclient::is_game_active() { return pragma::get_client_state()->IsGameActive
 bool iclient::is_game_initialized() { return is_game_active() && pragma::get_client_state()->GetGameState()->IsGameInitialized(); }
 void iclient::load_as_gui_module() { pragma::get_client_state()->InitializeGUIModule(); }
 
-std::shared_ptr<::Model> iclient::create_model(bool bAddReference) { return pragma::get_cgame()->CreateModel(bAddReference); }
+std::shared_ptr<pragma::Model> iclient::create_model(bool bAddReference) { return pragma::get_cgame()->CreateModel(bAddReference); }
 
-lua_State *iclient::get_lua_state() { return pragma::get_client_state()->GetLuaState(); }
-lua_State *iclient::get_gui_lua_state() { return pragma::get_client_state()->GetGUILuaState(); }
+lua::State *iclient::get_lua_state() { return pragma::get_client_state()->GetLuaState(); }
+lua::State *iclient::get_gui_lua_state() { return pragma::get_client_state()->GetGUILuaState(); }
 
-void iclient::add_gui_lua_wrapper_factory(const std::function<luabind::object(lua_State *, WIBase &)> &f) { pragma::get_client_state()->AddGUILuaWrapperFactory(f); }
+void iclient::add_gui_lua_wrapper_factory(const std::function<luabind::object(lua::State *, WIBase &)> &f) { pragma::get_client_state()->AddGUILuaWrapperFactory(f); }
 
 double iclient::real_time() { return pragma::get_client_state()->RealTime(); }
 double iclient::delta_time() { return pragma::get_client_state()->DeltaTime(); }
@@ -98,18 +86,16 @@ double iclient::last_think() { return pragma::get_client_state()->LastThink(); }
 
 bool iclient::protected_lua_call(int nargs, int nresults)
 {
-	lua_State *l = pragma::get_client_state()->GetLuaState();
-	return pragma::scripting::lua::protected_call(l, nargs, nresults) == Lua::StatusCode::Ok;
+	auto *l = pragma::get_client_state()->GetLuaState();
+	return pragma::scripting::lua_core::protected_call(l, nargs, nresults) == Lua::StatusCode::Ok;
 }
 
-GLFWwindow *iclient::get_context_window()
+/*GLFWwindow *iclient::get_context_window()
 {
 	auto &window = pragma::get_cengine()->GetWindow();
 	return const_cast<GLFWwindow *>(window->GetGLFWWindow());
-}
+}*/
 
-template<typename TCPPM>
-	TCPPM *pragma::CSceneComponent::GetRenderer() { return static_cast<TCPPM*>(m_renderer.get()); }
 std::shared_ptr<prosper::Texture> iclient::get_presentation_texture()
 {
 	auto *scene = pragma::get_cgame()->GetScene<pragma::CSceneComponent>();

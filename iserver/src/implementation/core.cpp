@@ -7,16 +7,11 @@ module;
 #define NOMINMAX
 #include <Windows.h>
 #endif
-#include <materialmanager.h>
-#include <mathutil/eulerangles.h>
-#include <sharedutils/util_cpu_profiler.hpp>
 
 module pragma.iserver;
 
 import :core;
-
-import pragma.server.game;
-import pragma.server.server_state;
+import pragma.server;
 
 // import pragma.scripting.lua;
 
@@ -57,9 +52,9 @@ void iserver::add_callback(Callback cb, const CallbackHandle &f)
 bool iserver::is_game_active() { return sv()->IsGameActive(); }
 bool iserver::is_game_initialized() { return is_game_active() && sv()->GetGameState()->IsGameInitialized(); }
 
-std::shared_ptr<::Model> iserver::create_model(bool bAddReference) { return sg()->CreateModel(bAddReference); }
+std::shared_ptr<pragma::Model> iserver::create_model(bool bAddReference) { return sg()->CreateModel(bAddReference); }
 
-lua_State *iserver::get_lua_state() { return sv()->GetLuaState(); }
+lua::State *iserver::get_lua_state() { return sv()->GetLuaState(); }
 
 double iserver::real_time() { return sv()->RealTime(); }
 double iserver::delta_time() { return sv()->DeltaTime(); }
@@ -67,6 +62,6 @@ double iserver::last_think() { return sv()->LastThink(); }
 
 bool iserver::protected_lua_call(int nargs, int nresults)
 {
-	lua_State *l = sv()->GetLuaState();
-	return pragma::scripting::lua::protected_call(l, nargs, nresults) == Lua::StatusCode::Ok;
+	auto *l = sv()->GetLuaState();
+	return pragma::scripting::lua_core::protected_call(l, nargs, nresults) == Lua::StatusCode::Ok;
 }
