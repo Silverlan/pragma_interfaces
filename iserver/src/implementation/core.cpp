@@ -15,14 +15,14 @@ import pragma.server;
 
 // import pragma.scripting.lua;
 
-static ServerState *sv() {return dynamic_cast<ServerState*>(pragma::get_server_state());}
-static SGame *sg() {return sv()->GetGameState();}
+static ServerState *sv() { return dynamic_cast<ServerState *>(pragma::get_server_state()); }
+static SGame *sg() { return sv()->GetGameState(); }
 
 static void add_server_callback(const std::string &identifier, const CallbackHandle &callback) { sv()->AddCallback(identifier, callback); }
 
 static void add_game_callback(const std::string &identifier, const CallbackHandle &callback)
 {
-    auto *game = sg();
+	auto *game = sg();
 	if(game == nullptr)
 		return;
 	game->AddCallback(identifier, callback);

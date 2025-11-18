@@ -14,8 +14,8 @@ import :core;
 import pragma.client;
 // import pragma.scripting.lua;
 
-static ClientState *cl() {return dynamic_cast<ClientState*>(pragma::get_client_state());}
-static CGame *cg() {return cl()->GetGameState();}
+static ClientState *cl() { return dynamic_cast<ClientState *>(pragma::get_client_state()); }
+static CGame *cg() { return cl()->GetGameState(); }
 
 static void add_client_callback(const std::string &identifier, const CallbackHandle &callback) { pragma::get_client_state()->AddCallback(identifier, callback); }
 
@@ -62,7 +62,7 @@ const CallbackHandle &iclient::add_callback(Callback cb, const CallbackHandle &f
 	case Callback::PostRender:
 		client->AddCallback("PostRender", f);
 		break;
-		case Callback::EngineDraw:
+	case Callback::EngineDraw:
 		pragma::get_cengine()->AddCallback("Draw", f);
 		break;
 	};
