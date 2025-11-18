@@ -1,22 +1,15 @@
 // SPDX-FileCopyrightText: (c) 2019 Silverlan <opensource@pragma-engine.com>
 // SPDX-License-Identifier: MIT
 
-#ifndef __ISCENE_H__
-#define __ISCENE_H__
+module;
 
-#include "iclientmodule.h"
-#include "ivector.h"
-#include "imatrix.h"
-#include <sharedutils/util_shared_handle.hpp>
-#include <memory>
-#include <vector>
+#include "definitions.hpp"
 
-class WorldEnvironment;
-class Scene;
-namespace pragma {
-	class CSceneComponent;
-};
-class DLLICLIENT IScene {
+export module pragma.iclient:scene;
+
+import pragma.client;
+
+export class DLLICLIENT IScene {
   public:
 	IScene(pragma::CSceneComponent &scene);
 	const pragma::CSceneComponent &GetTarget() const;
@@ -31,5 +24,3 @@ class DLLICLIENT IScene {
   private:
 	util::TWeakSharedHandle<pragma::CSceneComponent> m_target {};
 };
-
-#endif

@@ -1,11 +1,15 @@
 // SPDX-FileCopyrightText: (c) 2019 Silverlan <opensource@pragma-engine.com>
 // SPDX-License-Identifier: MIT
 
-#include "pragma/iscene.h"
-#include <pragma/c_engine.h>
-#include <pragma/clientstate/clientstate.h>
+module;
 
-extern DLLCLIENT CGame *c_game;
+module pragma.iclient;
+
+import :scene;
+
+import pragma.client;
+
+extern CGame *c_game;
 
 IScene::IScene(pragma::CSceneComponent &scene) : m_target(scene.GetHandle<pragma::CSceneComponent>()) {}
 
