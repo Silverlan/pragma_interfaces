@@ -15,8 +15,8 @@ import pragma.server;
 
 // import pragma.scripting.lua;
 
-static ServerState *sv() { return dynamic_cast<ServerState *>(pragma::get_server_state()); }
-static SGame *sg() { return sv()->GetGameState(); }
+static pragma::ServerState *sv() { return dynamic_cast<pragma::ServerState *>(pragma::get_server_state()); }
+static pragma::SGame *sg() { return sv()->GetGameState(); }
 
 static void add_server_callback(const std::string &identifier, const CallbackHandle &callback) { sv()->AddCallback(identifier, callback); }
 
@@ -52,7 +52,7 @@ void iserver::add_callback(Callback cb, const CallbackHandle &f)
 bool iserver::is_game_active() { return sv()->IsGameActive(); }
 bool iserver::is_game_initialized() { return is_game_active() && sv()->GetGameState()->IsGameInitialized(); }
 
-std::shared_ptr<pragma::Model> iserver::create_model(bool bAddReference) { return sg()->CreateModel(bAddReference); }
+std::shared_ptr<pragma::asset::Model> iserver::create_model(bool bAddReference) { return sg()->CreateModel(bAddReference); }
 
 lua::State *iserver::get_lua_state() { return sv()->GetLuaState(); }
 

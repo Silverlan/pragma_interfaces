@@ -16,7 +16,7 @@ export namespace iclient {
 	DLLICLIENT const CallbackHandle &add_callback(Callback cb, const CallbackHandle &f);
 	DLLICLIENT lua::State *get_lua_state();
 	DLLICLIENT lua::State *get_gui_lua_state();
-	DLLICLIENT void add_gui_lua_wrapper_factory(const std::function<luabind::adl::object(lua::State *, WIBase &)> &f);
+	DLLICLIENT void add_gui_lua_wrapper_factory(const std::function<luabind::adl::object(lua::State *, pragma::gui::types::WIBase &)> &f);
 	DLLICLIENT double real_time();
 	DLLICLIENT double delta_time();
 	DLLICLIENT double last_think();
@@ -29,7 +29,7 @@ export namespace iclient {
 	DLLICLIENT void draw_scene(const IScene &cam, const std::shared_ptr<prosper::IPrimaryCommandBuffer> &drawCmd, std::shared_ptr<prosper::RenderTarget> &rt);
 	DLLICLIENT prosper::Shader *get_shader(const std::string &shaderName);
 	DLLICLIENT bool is_game_active();
-	DLLICLIENT std::shared_ptr<pragma::Model> create_model(bool bAddReference = true);
+	DLLICLIENT std::shared_ptr<pragma::asset::Model> create_model(bool bAddReference = true);
 	DLLICLIENT bool is_game_initialized();
 	DLLICLIENT void load_as_gui_module();
 	DLLICLIENT void draw_frame(const std::function<void()> &fDrawFrame);

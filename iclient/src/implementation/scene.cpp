@@ -9,7 +9,7 @@ import :scene;
 
 import pragma.client;
 
-extern CGame *c_game;
+extern pragma::CGame *c_game;
 
 IScene::IScene(pragma::CSceneComponent &scene) : m_target(scene.GetHandle<pragma::CSceneComponent>()) {}
 
@@ -24,8 +24,8 @@ IScene IScene::Create()
 pragma::CSceneComponent &IScene::GetInternalScene() { return *static_cast<pragma::CSceneComponent *>(m_target.get()); }
 uint32_t IScene::GetWidth() const { return static_cast<const pragma::CSceneComponent *>(m_target.get())->GetWidth(); }
 uint32_t IScene::GetHeight() const { return static_cast<const pragma::CSceneComponent *>(m_target.get())->GetHeight(); }
-WorldEnvironment *IScene::GetWorldEnvironment() const { return static_cast<const pragma::CSceneComponent *>(m_target.get())->GetWorldEnvironment(); }
-void IScene::SetWorldEnvironment(WorldEnvironment *env)
+pragma::rendering::WorldEnvironment *IScene::GetWorldEnvironment() const { return static_cast<const pragma::CSceneComponent *>(m_target.get())->GetWorldEnvironment(); }
+void IScene::SetWorldEnvironment(pragma::rendering::WorldEnvironment *env)
 {
 	if(env == nullptr)
 		static_cast<pragma::CSceneComponent *>(m_target.get())->ClearWorldEnvironment();

@@ -19,6 +19,6 @@ export namespace iserver {
 	DLLISERVER double last_think();
 	DLLISERVER bool protected_lua_call(int nargs = 0, int nresults = 0);
 	DLLISERVER bool is_game_active();
-	DLLISERVER std::shared_ptr<pragma::Model> create_model(bool bAddReference = true);
+	DLLISERVER std::shared_ptr<pragma::asset::Model> create_model(bool bAddReference = true);
 	DLLISERVER bool is_game_initialized();
 };

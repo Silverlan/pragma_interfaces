@@ -14,8 +14,8 @@ import :core;
 import pragma.client;
 // import pragma.scripting.lua;
 
-static ClientState *cl() { return dynamic_cast<ClientState *>(pragma::get_client_state()); }
-static CGame *cg() { return cl()->GetGameState(); }
+static pragma::ClientState *cl() { return dynamic_cast<pragma::ClientState *>(pragma::get_client_state()); }
+static pragma::CGame *cg() { return cl()->GetGameState(); }
 
 static void add_client_callback(const std::string &identifier, const CallbackHandle &callback) { pragma::get_client_state()->AddCallback(identifier, callback); }
 
@@ -73,12 +73,12 @@ bool iclient::is_game_active() { return pragma::get_client_state()->IsGameActive
 bool iclient::is_game_initialized() { return is_game_active() && pragma::get_client_state()->GetGameState()->IsGameInitialized(); }
 void iclient::load_as_gui_module() { pragma::get_client_state()->InitializeGUIModule(); }
 
-std::shared_ptr<pragma::Model> iclient::create_model(bool bAddReference) { return pragma::get_cgame()->CreateModel(bAddReference); }
+std::shared_ptr<pragma::asset::Model> iclient::create_model(bool bAddReference) { return pragma::get_cgame()->CreateModel(bAddReference); }
 
 lua::State *iclient::get_lua_state() { return pragma::get_client_state()->GetLuaState(); }
 lua::State *iclient::get_gui_lua_state() { return pragma::get_client_state()->GetGUILuaState(); }
 
-void iclient::add_gui_lua_wrapper_factory(const std::function<luabind::object(lua::State *, WIBase &)> &f) { pragma::get_client_state()->AddGUILuaWrapperFactory(f); }
+void iclient::add_gui_lua_wrapper_factory(const std::function<luabind::object(lua::State *, pragma::gui::types::WIBase &)> &f) { pragma::get_client_state()->AddGUILuaWrapperFactory(f); }
 
 double iclient::real_time() { return pragma::get_client_state()->RealTime(); }
 double iclient::delta_time() { return pragma::get_client_state()->DeltaTime(); }
@@ -112,7 +112,7 @@ IScene iclient::get_main_scene() { return IScene(*pragma::get_cgame()->GetScene<
 
 void iclient::draw_scene(const IScene &cam, const std::shared_ptr<prosper::IPrimaryCommandBuffer> &drawCmd, std::shared_ptr<prosper::RenderTarget> &rt)
 {
-	util::DrawSceneInfo drawSceneInfo {};
+	pragma::rendering::DrawSceneInfo drawSceneInfo {};
 	drawSceneInfo.commandBuffer = drawCmd;
 	drawSceneInfo.outputImage = rt->GetTexture().GetImage().shared_from_this();
 

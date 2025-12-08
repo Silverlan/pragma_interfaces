@@ -19,8 +19,8 @@ export class DLLICLIENT IScene {
 	uint32_t GetWidth() const;
 	uint32_t GetHeight() const;
 
-	WorldEnvironment *GetWorldEnvironment() const;
-	void SetWorldEnvironment(WorldEnvironment *env);
+	pragma::rendering::WorldEnvironment *GetWorldEnvironment() const;
+	void SetWorldEnvironment(pragma::rendering::WorldEnvironment *env);
   private:
 	util::TWeakSharedHandle<pragma::CSceneComponent> m_target {};
 };
