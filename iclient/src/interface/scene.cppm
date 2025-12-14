@@ -22,5 +22,5 @@ export class DLLICLIENT IScene {
 	pragma::rendering::WorldEnvironment *GetWorldEnvironment() const;
 	void SetWorldEnvironment(pragma::rendering::WorldEnvironment *env);
   private:
-	util::TWeakSharedHandle<pragma::CSceneComponent> m_target {};
+	pragma::util::TWeakSharedHandle<pragma::CSceneComponent> m_target {};
 };
