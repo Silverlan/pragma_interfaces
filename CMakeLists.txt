@@ -10,5 +10,5 @@ set_target_properties(iclient PROPERTIES FOLDER module_interfaces)
 set_target_properties(iserver PROPERTIES FOLDER module_interfaces)
 set_target_properties(ishared PROPERTIES FOLDER module_interfaces)
 
-set_property(GLOBAL PROPERTY PRAGMA_MODULE_SKIP_INSTALL 1)
-set_property(GLOBAL APPEND PROPERTY PRAGMA_MODULE_TARGETS ishared iserver iclient)
+set_property(GLOBAL PROPERTY PRAGMA_MODULE_interfaces_SKIP_INSTALL 1)
+set_property(GLOBAL APPEND PROPERTY PRAGMA_MODULE_interfaces_TARGETS ishared iserver iclient)
